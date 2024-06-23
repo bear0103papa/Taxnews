@@ -41,12 +41,13 @@ jobs:
                   // Adjust the selector according to the structure of the target website
                   $('.news-list li').each((index, element) => {
                       const title = $(element).find('a').text().trim();
-                      const description = $(element).find('p').text().trim();
                       const url = $(element).find('a').attr('href');
+  // Optionally, fetch the full content of each news article
+            // This assumes each news article has a separate page
+            const fullContent = fetchFullContent(url);  // Define this function to fetch full content
 
-                      taxNews.push({ title, description, url });
-                  });
-
+            newsList.push({ title, url, fullContent });
+        });
                   fs.writeFileSync('tax-news.json', JSON.stringify(taxNews, null, 2));
               } catch (error) {
                   console.error('Error fetching tax news:', error);
