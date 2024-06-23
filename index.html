@@ -42,7 +42,7 @@
         newsContainer.innerHTML = '';
 
         // Fetch tax news from GitHub
-        const response = await fetch('https://raw.githubusercontent.com/<your-username>/<your-repo>/master/tax-news.json');
+        const response = await fetch('https://raw.githubusercontent.com/bear0103papa/main/tax-news.json');
         const news = await response.json();
         
         news.forEach(article => {
