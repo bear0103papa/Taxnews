@@ -38,12 +38,14 @@ jobs:
 
                   const taxNews = [];
 
-                  // Adjust the selector according to the structure of the target website
+                  # // Adjust the selector according to the structure of the target website
                   $('.news-list li').each((index, element) => {
                       const title = $(element).find('a').text().trim();
                       const url = $(element).find('a').attr('href');
-  // Optionally, fetch the full content of each news article
-            // This assumes each news article has a separate page
+  
+  # // Optionally, fetch the full content of each news article
+  
+            # // This assumes each news article has a separate page
             const fullContent = fetchFullContent(url);  // Define this function to fetch full content
 
             newsList.push({ title, url, fullContent });
