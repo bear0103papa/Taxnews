@@ -1,5 +1,36 @@
-git init
-git add tax-news.json
-git commit -m "Add tax news data"
-git remote add origin https://github.com/<your-username>/<your-repo>.git
-git push -u origin master
+[
+    {
+        "title": "Tax News1",
+        "description": "財政部法規新聞查詢",
+        "url": "https://law-out.mof.gov.tw/"
+    },
+    {
+        "title": "Tax News2",
+        "description": "財政部賦稅屬",
+        "url": "https://www.mof.gov.tw/multiplehtml/384fb3077bb349ea973e7fc6f13b6974"
+    }
+]
+    {
+        "title": "Tax News3",
+        "description": "財政部北區國稅局",
+        "url": "https://www.ntbna.gov.tw/multiplehtml/374fe8c4b18e48c691a6806ac02b9984#gsc.tab=0"
+    }
+]
+    {
+        "title": "Tax News4",
+        "description": "財政部中區國稅局",
+        "url": "https://www.ntbca.gov.tw/multiplehtml/3c844e426e9c4b5ebcaaa18694d7e230#gsc.tab=0"
+    }
+]
+    {
+        "title": "Tax News5",
+        "description": "財政部高雄國稅局",
+        "url": "https://www.ntbk.gov.tw/multiplehtml/8edee6a2f90d4254a5e8d38c1db38137"
+    }
+]
+    {
+        "title": "Tax News6",
+        "description": "財政部台北國稅局",
+        "url": "https://www.ntbt.gov.tw/multiplehtml/41ae3594197f4f69b47753ce08188516"
+    }
+]
