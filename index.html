@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Law and News Aggregator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+        .news-section {
+            margin: 20px;
+        }
+        .news-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Tax News Aggregator</h1>
+</header>
+
+<section class="news-section">
+    <h2>Latest Tax News</h2>
+    <div id="tax-news">
+        <!-- Tax news will be inserted here -->
+    </div>
+</section>
+
+<script>
+    async function fetchTaxNews() {
+        const newsContainer = document.getElementById('tax-news');
+        newsContainer.innerHTML = '';
+
+        // Fetch tax news from GitHub
+        const response = await fetch('https://raw.githubusercontent.com/<your-username>/<your-repo>/master/tax-news.json');
+        const news = await response.json();
+        
+        news.forEach(article => {
+            const newsItem = document.createElement('div');
+            newsItem.classList.add('news-item');
+            newsItem.innerHTML = `<h3>${article.title}</h3><p>${article.description}</p><a href="${article.url}" target="_blank">Read more</a>`;
+            newsContainer.appendChild(newsItem);
+        });
+    }
+
+    // Fetch tax news when the page loads
+    window.onload = () => {
+        fetchTaxNews();
+    };
+</script>
+
+</body>
+</html>
