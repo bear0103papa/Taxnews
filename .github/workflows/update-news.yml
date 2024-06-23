@@ -12,57 +12,59 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-    - name: Install dependencies
-      run: npm install axios cheerio
-- name: Fetch tax news
-  run: |
-    node <<'EOF'
-    const axios = require('axios');
-    const cheerio = require('cheerio');
-    const fs = require('fs');
+      - name: Install dependencies
+        run: npm install axios cheerio
 
-    const fetchTaxNews = async () => {
-        try {
-            const response = await axios.get('https://law-out.mof.gov.tw/');
-            const html = response.data;
-            const $ = cheerio.load(html);
+      - name: Fetch tax news
+        run: |
+          node <<EOF
+          const axios = require('axios');
+          const cheerio = require('cheerio');
+          const fs = require('fs');
 
-            const taxNews = [];
+          const fetchTaxNews = async () => {
+              try {
+                  const response = await axios.get('https://law-out.mof.gov.tw/');
+                  const html = response.data;
+                  const $ = cheerio.load(html);
 
-            // 調整選擇器以符合目標網站的 HTML 結構
-            $('.news-item').each((index, element) => {
-                const title = $(element).find('.news-title').text().trim();
-                const description = $(element).find('.news-description').text().trim();
-                const url = $(element).find('a').attr('href');
+                  const taxNews = [];
 
-                taxNews.push({ title, description, url });
-            });
+                  // Adjust the selector according to the structure of the target website
+                  $('.news-item').each((index, element) => {
+                      const title = $(element).find('.news-title').text().trim();
+                      const description = $(element).find('.news-description').text().trim();
+                      const url = $(element).find('a').attr('href');
 
-            fs.writeFileSync('tax-news.json', JSON.stringify(taxNews, null, 2));
-        } catch (error) {
-            console.error('Error fetching tax news:', error);
-            process.exit(1);
-        }
-    };
+                      taxNews.push({ title, description, url });
+                  });
 
-    fetchTaxNews();
-    EOF
+                  fs.writeFileSync('tax-news.json', JSON.stringify(taxNews, null, 2));
+              } catch (error) {
+                  console.error('Error fetching tax news:', error);
+                  process.exit(1);
+              }
+          };
 
+          fetchTaxNews();
+          EOF
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Commit and push changes
-      run: |
-        git config --global bear0103papa 'github-actions[bot]'
-        git config --global bear0103papa1@gmail.com 'github-actions[bot]@users.noreply.github.com'
-        git add tax-news.json
-        git commit -m "Update tax news"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add tax-news.json
+          git commit -m "Update tax news"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
