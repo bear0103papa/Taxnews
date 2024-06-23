@@ -59,8 +59,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git config --global bear0103papa 'github-actions[bot]'
+        git config --global bear0103papa1@gmail.com 'github-actions[bot]@users.noreply.github.com'
         git add tax-news.json
         git commit -m "Update tax news"
         git push
