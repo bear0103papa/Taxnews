@@ -39,9 +39,9 @@ jobs:
                   const taxNews = [];
 
                   // Adjust the selector according to the structure of the target website
-                  $('.news-item').each((index, element) => {
-                      const title = $(element).find('.news-title').text().trim();
-                      const description = $(element).find('.news-description').text().trim();
+                  $('.news-list li').each((index, element) => {
+                      const title = $(element).find('a').text().trim();
+                      const description = $(element).find('p').text().trim();
                       const url = $(element).find('a').attr('href');
 
                       taxNews.push({ title, description, url });
