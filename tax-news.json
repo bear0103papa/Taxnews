@@ -1,0 +1,5 @@
+git init
+git add tax-news.json
+git commit -m "Add tax news data"
+git remote add origin https://github.com/<your-username>/<your-repo>.git
+git push -u origin master
