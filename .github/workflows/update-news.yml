@@ -22,7 +22,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install axios cheerio  # 安裝必要的依賴包
-
       - name: Fetch tax news and update JSON
         run: |
           node <<EOF
