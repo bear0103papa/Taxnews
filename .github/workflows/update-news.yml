@@ -22,39 +22,40 @@ jobs:
 
     - name: Install dependencies
       run: npm install axios cheerio
+- name: Fetch tax news
+  run: |
+    node <<'EOF'
+    const axios = require('axios');
+    const cheerio = require('cheerio');
+    const fs = require('fs');
 
-    - name: Fetch tax news
-      run: |
-        node <<'EOF'
-        const axios = require('axios');
-        const cheerio = require('cheerio');
-        const fs = require('fs');
+    const fetchTaxNews = async () => {
+        try {
+            const response = await axios.get('https://law-out.mof.gov.tw/');
+            const html = response.data;
+            const $ = cheerio.load(html);
 
-        const fetchTaxNews = async () => {
-            try {
-                const response = await axios.get('https://law-out.mof.gov.tw/'); // Replace with actual URL
-                const html = response.data;
-                const $ = cheerio.load(html);
+            const taxNews = [];
 
-                const taxNews = [];
+            // 調整選擇器以符合目標網站的 HTML 結構
+            $('.news-item').each((index, element) => {
+                const title = $(element).find('.news-title').text().trim();
+                const description = $(element).find('.news-description').text().trim();
+                const url = $(element).find('a').attr('href');
 
-                $('.news-item').each((index, element) => {
-                    const title = $(element).find('.news-title').text();
-                    const description = $(element).find('.news-description').text();
-                    const url = $(element).find('a').attr('href');
+                taxNews.push({ title, description, url });
+            });
 
-                    taxNews.push({ title, description, url });
-                });
+            fs.writeFileSync('tax-news.json', JSON.stringify(taxNews, null, 2));
+        } catch (error) {
+            console.error('Error fetching tax news:', error);
+            process.exit(1);
+        }
+    };
 
-                fs.writeFileSync('tax-news.json', JSON.stringify(taxNews, null, 2));
-            } catch (error) {
-                console.error('Error fetching tax news:', error);
-                process.exit(1);
-            }
-        };
+    fetchTaxNews();
+    EOF
 
-        fetchTaxNews();
-        EOF
 
     - name: Commit and push changes
       run: |
